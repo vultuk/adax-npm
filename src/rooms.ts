@@ -28,14 +28,23 @@ export const getRoomTemperature = (req) => (roomId: number): number => {
   }
 }
 
-export const setRoomTemperature = (req) => (roomId: number): boolean => {
-  const results = req();
-  const rooms = results['rooms'];
-  const room = rooms[0];
 
-  if (room.status === 'NoAccess') {
-    throw new Error("No Matching Room Found");
+export const setRoomTemperature = (req) =>
+  /**
+   * Sets the temperature for a room
+   * 
+   * @param {number} [roomId] The ID of the room
+   * 
+   * @returns {boolean} If the update is successful a true boolean is returned
+   */
+  (roomId: number): true => {
+    const results = req();
+    const rooms = results['rooms'];
+    const room = rooms[0];
+
+    if (room.status === 'NoAccess') {
+      throw new Error("No Matching Room Found");
+    }
+
+    return true;
   }
-
-  return true;
-}

@@ -1,4 +1,4 @@
-import { listRooms, getRoomTemperature, getRoomTarget, setRoomTemperature } from './rooms';
+import { listRooms, getRoomTemperature, getRoomTarget, setRoomTemperature } from './rooms'
 
 test("Rooms -> Set Room Temperature", () => {
   let updateRoomTemperature = setRoomTemperature(() => ({
