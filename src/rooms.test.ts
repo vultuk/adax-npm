@@ -1,6 +1,6 @@
-import { listRooms, getRoomTemperature, getRoomTarget, setRoomTemperature } from './rooms'
+import { getRoomTarget, getRoomTemperature, listRooms, setRoomTemperature } from './rooms'
 
-test("Rooms -> Set Room Temperature", () => {
+test("Rooms -> Set Room Temperature", async() => {
   let updateRoomTemperature = setRoomTemperature(() => ({
     "rooms": [
       {
@@ -10,7 +10,7 @@ test("Rooms -> Set Room Temperature", () => {
     ]
   }));
 
-  expect(updateRoomTemperature(274802)).toBeTruthy()
+  expect(updateRoomTemperature(274802)).resolves.toBeTruthy()
 
   updateRoomTemperature = setRoomTemperature(() => ({
     "rooms": [
@@ -21,7 +21,7 @@ test("Rooms -> Set Room Temperature", () => {
     ]
   }));
 
-  expect(updateRoomTemperature(275351)).toBeTruthy()
+  expect(updateRoomTemperature(275351)).resolves.toBeTruthy()
 
   updateRoomTemperature = setRoomTemperature(() => ({
     "rooms": [
@@ -32,31 +32,31 @@ test("Rooms -> Set Room Temperature", () => {
     ]
   }));
 
-  expect(() => updateRoomTemperature(387372)).toThrowError('No Matching Room Found');
+  expect(updateRoomTemperature(387372)).rejects.toEqual(new Error('No Matching Room Found'));
 });
 
-test("Rooms -> Get Room Temperature", () => {
+test("Rooms -> Get Room Temperature", async() => {
   const roomTemperature = getRoomTemperature(fakeGetRequest);
 
-  expect(roomTemperature(274802)).toBe(20.78);
-  expect(roomTemperature(275351)).toBe(21.41);
+  expect(roomTemperature(274802)).resolves.toBe(20.78);
+  expect(roomTemperature(275351)).resolves.toBe(21.41);
 
-  expect(() => roomTemperature(387372)).toThrowError('No Matching Room Found');
+  expect(roomTemperature(387372)).rejects.toEqual(new Error('No Matching Room Found'));
 });
 
-test("Rooms -> Get Room Target Temperature", () => {
+test("Rooms -> Get Room Target Temperature", async() => {
   const roomTarget = getRoomTarget(fakeGetRequest);
 
-  expect(roomTarget(274802)).toBe(21.00);
-  expect(roomTarget(275351)).toBe(16.50);
+  expect(roomTarget(274802)).resolves.toBe(21.00);
+  expect(roomTarget(275351)).resolves.toBe(16.50);
 
-  expect(() => roomTarget(387372)).toThrowError('No Matching Room Found');
+  expect(roomTarget(387372)).rejects.toEqual(new Error('No Matching Room Found'));
 });
 
-test("Rooms -> List Rooms", () => {
+test("Rooms -> List Rooms", async() => {
   const getRoomDetails = listRooms(fakeGetRequest);
 
-  expect(getRoomDetails()).toEqual([
+  expect(getRoomDetails()).resolves.toEqual([
     {
       "id": 274802,
       "homeId": 139148,

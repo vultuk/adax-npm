@@ -1,10 +1,10 @@
-export const listRooms = (req) => () => {
+export const listRooms = (req) => async (): Promise<any> => {
   const results = req();
 
   return results['rooms'];
 }
 
-export const getRoomTarget = (req) => (roomId: number): number => {
+export const getRoomTarget = (req) => async (roomId: number): Promise<number> => {
   try {
     const results = req();
     const rooms = results['rooms'];
@@ -16,7 +16,7 @@ export const getRoomTarget = (req) => (roomId: number): number => {
   }
 }
 
-export const getRoomTemperature = (req) => (roomId: number): number => {
+export const getRoomTemperature = (req) => async (roomId: number): Promise<number> => {
   try {
     const results = req();
     const rooms = results['rooms'];
@@ -37,7 +37,7 @@ export const setRoomTemperature = (req) =>
    * 
    * @returns {boolean} If the update is successful a true boolean is returned
    */
-  (roomId: number): true => {
+  async (roomId: number): Promise<true> => {
     const results = req();
     const rooms = results['rooms'];
     const room = rooms[0];
